@@ -46,7 +46,7 @@ public class BackpackCurioRenderer implements ICurioRenderer {
             humanoid.body.translateAndRotate(poseStack);
         }
 
-        poseStack.translate(this.kind.getCurioOffsetX(), this.kind.getCurioOffsetY(), this.kind.getCurioOffsetZ());
+        BackpackPlacement.curio(this.kind).apply(poseStack);
 
         VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(
                 renderTypeBuffer,

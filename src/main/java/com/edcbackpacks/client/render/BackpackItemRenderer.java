@@ -30,6 +30,7 @@ public class BackpackItemRenderer extends BlockEntityWithoutLevelRenderer {
                              MultiBufferSource buffer, int packedLight, int packedOverlay) {
         poseStack.pushPose();
         applyDisplayTransforms(context, poseStack);
+        BackpackPlacement.item(this.kind, context).apply(poseStack);
 
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(
                 buffer, RenderType.entityCutoutNoCull(this.kind.getTexture()), false, stack.hasFoil());
