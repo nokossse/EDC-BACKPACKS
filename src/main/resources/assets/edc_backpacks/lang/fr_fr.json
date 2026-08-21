@@ -1,7 +1,9 @@
 {
   "item.edc_backpacks.raid_backpack": "Sac Raid",
+  "item.edc_backpacks.large_hiking_green": "Grand sac de randonnée (vert)",
   "itemGroup.edc_backpacks": "EDC: Backpacks",
   "container.edc_backpacks.raid_backpack": "Sac Raid",
+  "container.edc_backpacks.large_hiking_green": "Grand sac de randonnée (vert)",
   "key.edc_backpacks.open": "Ouvrir le sac",
   "key.categories.edc_backpacks": "EDC: Backpacks"
 }

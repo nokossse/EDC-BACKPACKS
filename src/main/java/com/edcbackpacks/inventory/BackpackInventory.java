@@ -1,18 +1,18 @@
 package com.edcbackpacks.inventory;
 
 import com.edcbackpacks.item.BackpackItem;
+import com.edcbackpacks.item.BackpackKind;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class BackpackInventory extends ItemStackHandler {
-    public static final int SLOTS = 54;
     public static final String INVENTORY_TAG = "Inventory";
 
     private final ItemStack backpack;
 
     public BackpackInventory(ItemStack backpack) {
-        super(SLOTS);
+        super(slotsOf(backpack));
         this.backpack = backpack;
         CompoundTag tag = backpack.getTag();
         if (tag != null && tag.contains(INVENTORY_TAG)) {
@@ -22,6 +22,13 @@ public class BackpackInventory extends ItemStackHandler {
 
     public static BackpackInventory from(ItemStack backpack) {
         return new BackpackInventory(backpack);
+    }
+
+    public static int slotsOf(ItemStack backpack) {
+        if (backpack.getItem() instanceof BackpackItem item) {
+            return item.getSlots();
+        }
+        return BackpackKind.RAID_BACKPACK.getSlots();
     }
 
     @Override

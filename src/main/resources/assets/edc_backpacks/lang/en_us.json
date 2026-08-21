@@ -1,7 +1,9 @@
 {
   "item.edc_backpacks.raid_backpack": "Raid Backpack",
+  "item.edc_backpacks.large_hiking_green": "Large Hiking Backpack (Green)",
   "itemGroup.edc_backpacks": "EDC: Backpacks",
   "container.edc_backpacks.raid_backpack": "Raid Backpack",
+  "container.edc_backpacks.large_hiking_green": "Large Hiking Backpack (Green)",
   "key.edc_backpacks.open": "Open Backpack",
   "key.categories.edc_backpacks": "EDC: Backpacks"
 }

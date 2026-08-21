@@ -1,29 +1,28 @@
 package com.edcbackpacks.client.render;
 
-import com.edcbackpacks.EdcBackpacks;
-import com.edcbackpacks.client.model.RaidBackpackModel;
+import com.edcbackpacks.client.model.BackpackModelBakery;
+import com.edcbackpacks.item.BackpackKind;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
 public class BackpackItemRenderer extends BlockEntityWithoutLevelRenderer {
-    private static final ResourceLocation TEXTURE =
-            new ResourceLocation(EdcBackpacks.MOD_ID, "textures/entity/raid_backpack.png");
+    private final BackpackKind kind;
+    private final EntityModel<?> model;
 
-    private final RaidBackpackModel<?> model;
-
-    public BackpackItemRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet models) {
+    public BackpackItemRenderer(BlockEntityRenderDispatcher dispatcher, EntityModelSet models, BackpackKind kind) {
         super(dispatcher, models);
-        this.model = new RaidBackpackModel<>(models.bakeLayer(RaidBackpackModel.LAYER_LOCATION));
+        this.kind = kind;
+        this.model = BackpackModelBakery.bake(models, kind);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class BackpackItemRenderer extends BlockEntityWithoutLevelRenderer {
         applyDisplayTransforms(context, poseStack);
 
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(
-                buffer, RenderType.entityCutoutNoCull(TEXTURE), false, stack.hasFoil());
+                buffer, RenderType.entityCutoutNoCull(this.kind.getTexture()), false, stack.hasFoil());
         this.model.renderToBuffer(poseStack, vertexConsumer, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.popPose();
     }

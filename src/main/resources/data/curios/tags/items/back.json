@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "edc_backpacks:raid_backpack"
+    "edc_backpacks:raid_backpack",
+    "edc_backpacks:large_hiking_green"
   ]
 }

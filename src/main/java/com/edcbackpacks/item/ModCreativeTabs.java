@@ -16,6 +16,9 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.edc_backpacks"))
                     .icon(() -> new ItemStack(ModItems.RAID_BACKPACK.get()))
-                    .displayItems((parameters, output) -> output.accept(ModItems.RAID_BACKPACK.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(ModItems.RAID_BACKPACK.get());
+                        output.accept(ModItems.LARGE_HIKING_GREEN.get());
+                    })
                     .build());
 }

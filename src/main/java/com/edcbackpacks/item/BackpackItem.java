@@ -15,8 +15,19 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import java.util.function.Consumer;
 
 public class BackpackItem extends Item {
-    public BackpackItem(Properties properties) {
+    private final BackpackKind kind;
+
+    public BackpackItem(Properties properties, BackpackKind kind) {
         super(properties);
+        this.kind = kind;
+    }
+
+    public BackpackKind getKind() {
+        return this.kind;
+    }
+
+    public int getSlots() {
+        return this.kind.getSlots();
     }
 
     @Override
@@ -39,7 +50,8 @@ public class BackpackItem extends Item {
                     Minecraft minecraft = Minecraft.getInstance();
                     this.renderer = new BackpackItemRenderer(
                             minecraft.getBlockEntityRenderDispatcher(),
-                            minecraft.getEntityModels());
+                            minecraft.getEntityModels(),
+                            BackpackItem.this.kind);
                 }
                 return this.renderer;
             }

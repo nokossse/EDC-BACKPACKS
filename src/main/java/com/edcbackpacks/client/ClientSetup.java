@@ -1,8 +1,10 @@
 package com.edcbackpacks.client;
 
 import com.edcbackpacks.EdcBackpacks;
+import com.edcbackpacks.client.model.LargeHikingGreenModel;
 import com.edcbackpacks.client.model.RaidBackpackModel;
 import com.edcbackpacks.client.render.BackpackCurioRenderer;
+import com.edcbackpacks.item.BackpackKind;
 import com.edcbackpacks.item.ModItems;
 import com.edcbackpacks.menu.ModMenus;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -20,13 +22,17 @@ public class ClientSetup {
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             MenuScreens.register(ModMenus.BACKPACK.get(), BackpackScreen::new);
-            CuriosRendererRegistry.register(ModItems.RAID_BACKPACK.get(), BackpackCurioRenderer::new);
+            CuriosRendererRegistry.register(ModItems.RAID_BACKPACK.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.RAID_BACKPACK));
+            CuriosRendererRegistry.register(ModItems.LARGE_HIKING_GREEN.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.LARGE_HIKING_GREEN));
         });
     }
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(RaidBackpackModel.LAYER_LOCATION, RaidBackpackModel::createBodyLayer);
+        event.registerLayerDefinition(LargeHikingGreenModel.LAYER_LOCATION, LargeHikingGreenModel::createBodyLayer);
     }
 
     @SubscribeEvent

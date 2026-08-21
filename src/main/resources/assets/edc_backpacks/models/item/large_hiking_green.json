@@ -2,7 +2,7 @@
   "parent": "builtin/entity",
   "gui_light": "front",
   "textures": {
-    "particle": "edc_backpacks:asset/raid_backpack"
+    "particle": "edc_backpacks:asset/large_hiking_green"
   },
   "display": {
     "gui": {

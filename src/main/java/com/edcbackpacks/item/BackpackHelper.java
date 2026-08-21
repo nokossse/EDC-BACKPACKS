@@ -1,5 +1,6 @@
 package com.edcbackpacks.item;
 
+import com.edcbackpacks.inventory.BackpackInventory;
 import com.edcbackpacks.menu.BackpackMenu;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -46,10 +47,12 @@ public final class BackpackHelper {
 
     public static void openBackpack(ServerPlayer player, ItemStack backpack, @Nullable InteractionHand hand) {
         playBackpackSound(player);
+        int slots = BackpackInventory.slotsOf(backpack);
         NetworkHooks.openScreen(player, new SimpleMenuProvider(
                 (id, inventory, opener) -> new BackpackMenu(id, inventory, backpack, hand),
                 backpack.getHoverName()
         ), buffer -> {
+            buffer.writeVarInt(slots);
             buffer.writeBoolean(hand != null);
             if (hand != null) {
                 buffer.writeEnum(hand);
