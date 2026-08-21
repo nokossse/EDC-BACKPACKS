@@ -47,7 +47,8 @@ public class BackpackItemRenderer extends BlockEntityWithoutLevelRenderer {
                 poseStack.scale(0.7F, 0.7F, 0.7F);
                 poseStack.mulPose(Axis.YP.rotationDegrees(150.0F));
                 poseStack.mulPose(Axis.XP.rotationDegrees(12.0F));
-                poseStack.translate(0.0F, -0.85F, 0.0F);
+                poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                poseStack.translate(0.0F, 0.85F, 0.0F);
             }
             case GROUND -> {
                 poseStack.scale(0.45F, 0.45F, 0.45F);

@@ -22,6 +22,16 @@ public final class BackpackPlacement {
     private BackpackPlacement() {
     }
 
+    /**
+     * RÉGLAGES RAPIDES (tous les sacs) — en pixels.
+     * Mets 6, rebuild, regarde. Si ça monte au lieu de descendre, mets -6.
+     *
+     * INVENTORY = cases d'inventaire + hotbar
+     * HAND = sac tenu en 1ère et 3e personne
+     */
+    public static final float INVENTORY_Y_PX = -16.0F;
+    public static final float HAND_Y_PX = 12.0F;
+
     /** Convertit des pixels Minecraft en blocs (1 bloc = 16 px). */
     public static float px(float pixels) {
         return pixels / 16.0F;
@@ -62,7 +72,7 @@ public final class BackpackPlacement {
      */
     public static Pose curio(BackpackKind kind) {
         return switch (kind) {
-            case RAID_BACKPACK -> Pose.of(0, 0F, 1.92F, 0, 0, 0, 1.0F);
+            case RAID_BACKPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
             case LARGE_HIKING_GREEN -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
         };
     }
@@ -82,20 +92,19 @@ public final class BackpackPlacement {
     }
 
     private static Pose itemRaid(ItemDisplayContext context) {
-        return switch (context) {
-            case GUI -> Pose.offset(0, 0, 0);
-            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> Pose.offset(0, 0, 0);
-            case GROUND -> Pose.offset(0, 0, 0);
-            default -> Pose.offset(0, 0, 0); // 3e personne + item frame
-        };
+        return itemShared(context);
     }
 
     private static Pose itemHikingGreen(ItemDisplayContext context) {
+        return itemShared(context);
+    }
+
+    private static Pose itemShared(ItemDisplayContext context) {
         return switch (context) {
-            case GUI -> Pose.offset(0, 0, 0);
-            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> Pose.offset(0, 0, 0);
+            case GUI -> Pose.offset(0, INVENTORY_Y_PX, 0);
+            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> Pose.offset(0, HAND_Y_PX, 0);
             case GROUND -> Pose.offset(0, 0, 0);
-            default -> Pose.offset(0, 0, 0);
+            default -> Pose.offset(0, HAND_Y_PX, 0);
         };
     }
 }
