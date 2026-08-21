@@ -1,7 +1,7 @@
 {
   "item.edc_backpacks.raid_backpack": "Sac Raid",
-  "itemGroup.edc_backpacks": "EDC: BACKPACKS",
+  "itemGroup.edc_backpacks": "EDC: Backpacks",
   "container.edc_backpacks.raid_backpack": "Sac Raid",
   "key.edc_backpacks.open": "Ouvrir le sac",
-  "key.categories.edc_backpacks": "EDC: BACKPACKS"
+  "key.categories.edc_backpacks": "EDC: Backpacks"
 }
