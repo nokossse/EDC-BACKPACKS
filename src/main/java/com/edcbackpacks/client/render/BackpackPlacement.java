@@ -29,8 +29,12 @@ public final class BackpackPlacement {
      * INVENTORY = cases d'inventaire + hotbar
      * HAND = sac tenu en 1ère et 3e personne
      */
-    public static final float INVENTORY_Y_PX = -16.0F;
+    public static final float INVENTORY_Y_PX = 12.0F;
     public static final float HAND_Y_PX = 12.0F;
+    /** Rotation du sac en main, en degrés. Un axe à la fois : 90, -90, 180. */
+    public static final float HAND_ROT_X = 180.0F;
+    public static final float HAND_ROT_Y = 0.0F;
+    public static final float HAND_ROT_Z = 0.0F;
 
     /** Convertit des pixels Minecraft en blocs (1 bloc = 16 px). */
     public static float px(float pixels) {
@@ -72,7 +76,7 @@ public final class BackpackPlacement {
      */
     public static Pose curio(BackpackKind kind) {
         return switch (kind) {
-            case RAID_BACKPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
+            case RAID_BACKPACK -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
             case LARGE_HIKING_GREEN -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
         };
     }
@@ -102,9 +106,10 @@ public final class BackpackPlacement {
     private static Pose itemShared(ItemDisplayContext context) {
         return switch (context) {
             case GUI -> Pose.offset(0, INVENTORY_Y_PX, 0);
-            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> Pose.offset(0, HAND_Y_PX, 0);
+            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND ->
+                    Pose.of(0, HAND_Y_PX, 0, HAND_ROT_X, HAND_ROT_Y, HAND_ROT_Z, 1.0F);
             case GROUND -> Pose.offset(0, 0, 0);
-            default -> Pose.offset(0, HAND_Y_PX, 0);
+            default -> Pose.of(0, HAND_Y_PX, 0, HAND_ROT_X, HAND_ROT_Y, HAND_ROT_Z, 1.0F);
         };
     }
 }

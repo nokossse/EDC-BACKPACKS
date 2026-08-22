@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public enum BackpackKind {
-    RAID_BACKPACK("raid_backpack", 54),
+    RAID_BACKPACK("raid_backpack", 63),
     LARGE_HIKING_GREEN("large_hiking_green", 45);
 
     private final String id;

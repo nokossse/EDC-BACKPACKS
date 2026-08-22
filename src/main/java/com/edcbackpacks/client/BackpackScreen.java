@@ -24,8 +24,16 @@ public class BackpackScreen extends AbstractContainerScreen<BackpackMenu> {
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
-        graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, this.containerRows * 18 + 17);
-        graphics.blit(TEXTURE, x, y + this.containerRows * 18 + 17, 0, 126, this.imageWidth, 96);
+        int slotAreaHeight = this.containerRows * 18 + 17;
+        int maxTextureSlotHeight = 6 * 18 + 17;
+
+        if (slotAreaHeight <= maxTextureSlotHeight) {
+            graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, slotAreaHeight);
+        } else {
+            graphics.blit(TEXTURE, x, y, 0, 0, this.imageWidth, maxTextureSlotHeight);
+            graphics.blit(TEXTURE, x, y + maxTextureSlotHeight, 0, 107, this.imageWidth, slotAreaHeight - maxTextureSlotHeight);
+        }
+        graphics.blit(TEXTURE, x, y + slotAreaHeight, 0, 126, this.imageWidth, 96);
     }
 
     @Override

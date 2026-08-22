@@ -16,7 +16,9 @@ public class BackpackInventory extends ItemStackHandler {
         this.backpack = backpack;
         CompoundTag tag = backpack.getTag();
         if (tag != null && tag.contains(INVENTORY_TAG)) {
-            deserializeNBT(tag.getCompound(INVENTORY_TAG));
+            CompoundTag inventory = tag.getCompound(INVENTORY_TAG).copy();
+            inventory.putInt("Size", getSlots());
+            deserializeNBT(inventory);
         }
     }
 
