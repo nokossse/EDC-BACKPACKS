@@ -77,7 +77,9 @@ public final class BackpackPlacement {
     public static Pose curio(BackpackKind kind) {
         return switch (kind) {
             case RAID_BACKPACK -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
-            case LARGE_HIKING_GREEN -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
+            case LARGE_HIKING_GREEN, LARGE_HIKING_BLUE, LARGE_HIKING_RED -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
+            case DAYPACK_SAND -> Pose.of(0, 0F, 3.2F, 0, 0, 0, 1.0F);
+            case DUFFLE_ADI -> Pose.of(1, 0F, 3.2F, 0, 0, 0, 1.0F);
         };
     }
 
@@ -91,7 +93,9 @@ public final class BackpackPlacement {
     public static Pose item(BackpackKind kind, ItemDisplayContext context) {
         return switch (kind) {
             case RAID_BACKPACK -> itemRaid(context);
-            case LARGE_HIKING_GREEN -> itemHikingGreen(context);
+            case LARGE_HIKING_GREEN, LARGE_HIKING_BLUE, LARGE_HIKING_RED -> itemHikingGreen(context);
+            case DAYPACK_SAND -> itemDaypackSand(context);
+            case DUFFLE_ADI -> itemDuffleAdi(context);
         };
     }
 
@@ -100,6 +104,14 @@ public final class BackpackPlacement {
     }
 
     private static Pose itemHikingGreen(ItemDisplayContext context) {
+        return itemShared(context);
+    }
+
+    private static Pose itemDaypackSand(ItemDisplayContext context) {
+        return itemShared(context);
+    }
+
+    private static Pose itemDuffleAdi(ItemDisplayContext context) {
         return itemShared(context);
     }
 

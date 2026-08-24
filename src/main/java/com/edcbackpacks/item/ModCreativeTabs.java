@@ -19,6 +19,10 @@ public class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.RAID_BACKPACK.get());
                         output.accept(ModItems.LARGE_HIKING_GREEN.get());
+                        output.accept(ModItems.LARGE_HIKING_BLUE.get());
+                        output.accept(ModItems.LARGE_HIKING_RED.get());
+                        output.accept(ModItems.DAYPACK_SAND.get());
+                        output.accept(ModItems.DUFFLE_ADI.get());
                     })
                     .build());
 }

@@ -6,7 +6,11 @@ import net.minecraft.world.item.ItemStack;
 
 public enum BackpackKind {
     RAID_BACKPACK("raid_backpack", 63),
-    LARGE_HIKING_GREEN("large_hiking_green", 45);
+    LARGE_HIKING_GREEN("large_hiking_green", 45),
+    LARGE_HIKING_BLUE("large_hiking_blue", 45),
+    LARGE_HIKING_RED("large_hiking_red", 45),
+    DAYPACK_SAND("daypack_sand", 36),
+    DUFFLE_ADI("duffle_adi", 18);
 
     private final String id;
     private final int slots;

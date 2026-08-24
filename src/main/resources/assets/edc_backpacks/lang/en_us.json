@@ -1,9 +1,17 @@
 {
   "item.edc_backpacks.raid_backpack": "Raid Backpack",
   "item.edc_backpacks.large_hiking_green": "Large Hiking Backpack (Green)",
+  "item.edc_backpacks.large_hiking_blue": "Large Hiking Backpack (Blue)",
+  "item.edc_backpacks.large_hiking_red": "Large Hiking Backpack (Red)",
+  "item.edc_backpacks.daypack_sand": "Daypack (Sand)",
+  "item.edc_backpacks.duffle_adi": "Duffle sport bag",
   "itemGroup.edc_backpacks": "EDC: Backpacks",
   "container.edc_backpacks.raid_backpack": "Raid Backpack",
   "container.edc_backpacks.large_hiking_green": "Large Hiking Backpack (Green)",
+  "container.edc_backpacks.large_hiking_blue": "Large Hiking Backpack (Blue)",
+  "container.edc_backpacks.large_hiking_red": "Large Hiking Backpack (Red)",
+  "container.edc_backpacks.daypack_sand": "Daypack (Sand)",
+  "container.edc_backpacks.duffle_adi": "Duffle sport bag",
   "key.edc_backpacks.open": "Open Backpack",
   "key.categories.edc_backpacks": "EDC: Backpacks"
 }

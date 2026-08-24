@@ -1,6 +1,8 @@
 package com.edcbackpacks.client;
 
 import com.edcbackpacks.EdcBackpacks;
+import com.edcbackpacks.client.model.DaypackSandModel;
+import com.edcbackpacks.client.model.DuffleAdiModel;
 import com.edcbackpacks.client.model.LargeHikingGreenModel;
 import com.edcbackpacks.client.model.RaidBackpackModel;
 import com.edcbackpacks.client.render.BackpackCurioRenderer;
@@ -26,6 +28,14 @@ public class ClientSetup {
                     () -> new BackpackCurioRenderer(BackpackKind.RAID_BACKPACK));
             CuriosRendererRegistry.register(ModItems.LARGE_HIKING_GREEN.get(),
                     () -> new BackpackCurioRenderer(BackpackKind.LARGE_HIKING_GREEN));
+            CuriosRendererRegistry.register(ModItems.LARGE_HIKING_BLUE.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.LARGE_HIKING_BLUE));
+            CuriosRendererRegistry.register(ModItems.LARGE_HIKING_RED.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.LARGE_HIKING_RED));
+            CuriosRendererRegistry.register(ModItems.DAYPACK_SAND.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.DAYPACK_SAND));
+            CuriosRendererRegistry.register(ModItems.DUFFLE_ADI.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.DUFFLE_ADI));
         });
     }
 
@@ -33,6 +43,8 @@ public class ClientSetup {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(RaidBackpackModel.LAYER_LOCATION, RaidBackpackModel::createBodyLayer);
         event.registerLayerDefinition(LargeHikingGreenModel.LAYER_LOCATION, LargeHikingGreenModel::createBodyLayer);
+        event.registerLayerDefinition(DaypackSandModel.LAYER_LOCATION, DaypackSandModel::createBodyLayer);
+        event.registerLayerDefinition(DuffleAdiModel.LAYER_LOCATION, DuffleAdiModel::createBodyLayer);
     }
 
     @SubscribeEvent

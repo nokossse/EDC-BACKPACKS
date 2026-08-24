@@ -2,6 +2,10 @@
   "replace": false,
   "values": [
     "edc_backpacks:raid_backpack",
-    "edc_backpacks:large_hiking_green"
+    "edc_backpacks:large_hiking_green",
+    "edc_backpacks:large_hiking_blue",
+    "edc_backpacks:large_hiking_red",
+    "edc_backpacks:daypack_sand",
+    "edc_backpacks:duffle_adi"
   ]
 }

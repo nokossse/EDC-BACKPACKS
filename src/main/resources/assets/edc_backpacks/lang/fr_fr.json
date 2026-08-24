@@ -1,9 +1,17 @@
 {
   "item.edc_backpacks.raid_backpack": "Sac Raid",
   "item.edc_backpacks.large_hiking_green": "Grand sac de randonnée (vert)",
+  "item.edc_backpacks.large_hiking_blue": "Grand sac de randonnée (bleu)",
+  "item.edc_backpacks.large_hiking_red": "Grand sac de randonnée (rouge)",
+  "item.edc_backpacks.daypack_sand": "Daypack (sable)",
+  "item.edc_backpacks.duffle_adi": "Sac de sport Duffle",
   "itemGroup.edc_backpacks": "EDC: Backpacks",
   "container.edc_backpacks.raid_backpack": "Sac Raid",
   "container.edc_backpacks.large_hiking_green": "Grand sac de randonnée (vert)",
+  "container.edc_backpacks.large_hiking_blue": "Grand sac de randonnée (bleu)",
+  "container.edc_backpacks.large_hiking_red": "Grand sac de randonnée (rouge)",
+  "container.edc_backpacks.daypack_sand": "Daypack (sable)",
+  "container.edc_backpacks.duffle_adi": "Sac de sport Duffle",
   "key.edc_backpacks.open": "Ouvrir le sac",
   "key.categories.edc_backpacks": "EDC: Backpacks"
 }
