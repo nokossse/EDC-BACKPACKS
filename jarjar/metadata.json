@@ -1,0 +1,10 @@
+{
+  "jars": [
+    {
+      "identifier": {"group": "com.github.mcmodderanchor", "artifact": "simplebedrockmodel"},
+      "version": {"range": "[2.5.1,)", "artifactVersion": "2.5.1"},
+      "path": "META-INF/jarjar/simplebedrockmodel-2.5.1-forge-mc1.20.1.jar",
+      "isObfuscated": false
+    }
+  ]
+}

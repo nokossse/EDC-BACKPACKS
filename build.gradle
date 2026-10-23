@@ -9,7 +9,7 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = 'edc-backpacks'
+    archivesName = 'modern-backpacks'
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -24,6 +24,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            // Curios mixins are SRG-named; remap them for official mappings in userdev.
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             mods {
                 "${mod_id}" {
@@ -59,11 +62,19 @@ repositories {
         name = 'Curios'
         url = 'https://maven.theillusivec4.top/'
     }
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
+
+    // flatDir + fg.deobf: files() collections are not deobfuscated by FG 6.
+    implementation fg.deobf('local:simplebedrockmodel:2.5.1-forge-mc1.20.1')
+    // MAE is SBM's jar-in-jar library (no mods.toml); needed on the compile classpath only.
+    compileOnly files('libs/mae-1.1.4.jar')
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -82,7 +93,7 @@ tasks.named('processResources', ProcessResources).configure {
     }
 
     from('asset') {
-        into 'assets/edc_backpacks/textures/asset'
+        into 'assets/modern_backpacks/textures/asset'
         include '*.png'
     }
 }
@@ -100,6 +111,11 @@ tasks.named('jar', Jar).configure {
         ])
     }
 
+    // SBM is embedded as a nested mod (jar-in-jar, LGPL-3.0, unmodified), so players install one file.
+    from('libs/simplebedrockmodel-2.5.1-forge-mc1.20.1.jar') { into 'META-INF/jarjar' }
+    // Only in the built jar: in dev runs the folder is on the classpath and Forge would look for the nested jar.
+    from('jarjar/metadata.json') { into 'META-INF/jarjar' }
+
     finalizedBy 'reobfJar'
 }
 
@@ -116,6 +132,18 @@ publishing {
     }
 }
 
+tasks.register('extractMae', Copy) {
+    from(zipTree('libs/simplebedrockmodel-2.5.1-forge-mc1.20.1.jar')) {
+        include 'META-INF/jarjar/mae-1.1.4.jar'
+        eachFile { details ->
+            details.path = 'mae-1.1.4.jar'
+        }
+        includeEmptyDirs = false
+    }
+    into 'libs'
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    dependsOn 'extractMae'
 }
