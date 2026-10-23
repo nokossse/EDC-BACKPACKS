@@ -19,6 +19,8 @@ public class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(ModItems.TASMANIAN_TIGER_MK3_GREEN.get());
                         output.accept(ModItems.OLIVE_DAYPACK.get());
+                        output.accept(ModItems.OSPREY_KESTREL.get());
+                        output.accept(ModItems.LARGE_MILITARY_DAYPACK.get());
                     })
                     .build());
 }

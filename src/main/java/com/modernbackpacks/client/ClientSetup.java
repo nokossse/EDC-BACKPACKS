@@ -28,6 +28,10 @@ public class ClientSetup {
                     () -> new BackpackCurioRenderer(BackpackKind.TASMANIAN_TIGER_MK3_GREEN));
             CuriosRendererRegistry.register(ModItems.OLIVE_DAYPACK.get(),
                     () -> new BackpackCurioRenderer(BackpackKind.OLIVE_DAYPACK));
+            CuriosRendererRegistry.register(ModItems.OSPREY_KESTREL.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.OSPREY_KESTREL));
+            CuriosRendererRegistry.register(ModItems.LARGE_MILITARY_DAYPACK.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.LARGE_MILITARY_DAYPACK));
         });
     }
 
@@ -35,7 +39,7 @@ public class ClientSetup {
     public static void registerBedrockModels(RegisterV2BedrockResourcesEvent event) {
         for (BackpackKind kind : BackpackKind.values()) {
             event.bakedModel(kind.getBedrockModel())
-                    .options(BakerOptions.ofAnimatedBones(Set.of(BedrockBackpackModel.STRAPS_BONE)))
+                    .options(BakerOptions.ofAnimatedBones(BedrockBackpackModel.STRAPS_BONES))
                     .register();
         }
     }

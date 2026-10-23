@@ -13,11 +13,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.Locale;
+import java.util.Set;
 
 public final class BedrockBackpackModel implements BackpackModel {
     private static final String REFERENCE_ROOT = "steve";
-    /** Bone swung by {@link #setStrapSway}; must be baked as a runtime bone (see ClientSetup). */
-    public static final String STRAPS_BONE = "straps-rot";
+    /** Bones swung by {@link #setStrapSway}, per model; must be baked as runtime bones (see ClientSetup). */
+    public static final Set<String> STRAPS_BONES = Set.of("straps-rot", "rota_staps");
 
     private final ResourceLocation modelId;
     private BakedBedrockModel baked;
@@ -42,10 +43,12 @@ public final class BedrockBackpackModel implements BackpackModel {
             hideReferenceRig(this.instance);
         }
 
-        BoneState straps = this.instance.getBone(STRAPS_BONE);
-        if (straps != null) {
-            straps.reset();
-            straps.rotation.rotateX((float) Math.toRadians(this.swayPitch)).rotateZ((float) Math.toRadians(this.swayRoll));
+        for (String name : STRAPS_BONES) {
+            BoneState straps = this.instance.getBone(name);
+            if (straps != null) {
+                straps.reset();
+                straps.rotation.rotateX((float) Math.toRadians(this.swayPitch)).rotateZ((float) Math.toRadians(this.swayRoll));
+            }
         }
 
         poseStack.pushPose();

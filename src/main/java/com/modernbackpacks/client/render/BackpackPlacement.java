@@ -5,6 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.world.item.ItemDisplayContext;
 
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Tous les placements 3D se règlent ICI.
  *
@@ -27,14 +32,11 @@ public final class BackpackPlacement {
      * Mets 6, rebuild, regarde. Si ça monte au lieu de descendre, mets -6.
      *
      * INVENTORY = cases d'inventaire + hotbar
-     * HAND = sac tenu en 1ère et 3e personne
      */
     public static final float INVENTORY_Y_PX = 12.0F;
-    public static final float HAND_Y_PX = 12.0F;
-    /** Rotation du sac en main, en degrés. Un axe à la fois : 90, -90, 180. */
-    public static final float HAND_ROT_X = 180.0F;
-    public static final float HAND_ROT_Y = 0.0F;
-    public static final float HAND_ROT_Z = 0.0F;
+
+    /** Recul du sac (px, vers l'arrière) quand le joueur porte un plastron, quel qu'il soit. Réglé via /mbplace armor. */
+    public static float armorOffsetPx = 1.2F;
 
     /** Convertit des pixels Minecraft en blocs (1 bloc = 16 px). */
     public static float px(float pixels) {
@@ -79,7 +81,7 @@ public final class BackpackPlacement {
             // Modélisé directement sur le Steve de Blockbench : 0 = position exacte de Blockbench.
             case TASMANIAN_TIGER_MK3_GREEN -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
             // Modélisé directement sur le Steve de Blockbench : 0 = position exacte de Blockbench.
-            case OLIVE_DAYPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
+            case OLIVE_DAYPACK, OSPREY_KESTREL, LARGE_MILITARY_DAYPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
         };
     }
 
@@ -91,9 +93,48 @@ public final class BackpackPlacement {
      * GUI = inventaire / hotbar. FIRST = 1ère personne. THIRD = 3e personne. GROUND = au sol.
      */
     public static Pose item(BackpackKind kind, ItemDisplayContext context) {
+        String group = group(context);
+        float[] o = group == null ? null : OVERRIDES.getOrDefault(kind, Map.of()).get(group);
+        return o == null ? itemDefault(kind, context) : Pose.of(o[0], o[1], o[2], o[3], o[4], o[5], o[6]);
+    }
+
+    // --- Réglage en jeu (/mbplace) : valeurs [x, y, z (px), rotX, rotY, rotZ, scale] par sac et par contexte. ---
+    private static final Map<BackpackKind, Map<String, float[]>> OVERRIDES = new EnumMap<>(BackpackKind.class);
+
+    public static final List<String> GROUPS = List.of("first", "third", "gui", "ground");
+
+    private static String group(ItemDisplayContext context) {
+        return switch (context) {
+            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> "first";
+            case THIRD_PERSON_LEFT_HAND, THIRD_PERSON_RIGHT_HAND -> "third";
+            case GUI -> "gui";
+            case GROUND -> "ground";
+            default -> null;
+        };
+    }
+
+    /** Valeurs modifiables pour ce sac/contexte, initialisées depuis la pose actuelle. */
+    public static float[] tunable(BackpackKind kind, String group) {
+        return OVERRIDES.computeIfAbsent(kind, k -> new HashMap<>()).computeIfAbsent(group, g -> {
+            Pose p = itemDefault(kind, switch (g) {
+                case "first" -> ItemDisplayContext.FIRST_PERSON_RIGHT_HAND;
+                case "third" -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
+                case "gui" -> ItemDisplayContext.GUI;
+                default -> ItemDisplayContext.GROUND;
+            });
+            return new float[]{p.x() * 16, p.y() * 16, p.z() * 16, p.rotX(), p.rotY(), p.rotZ(), p.scale()};
+        });
+    }
+
+    public static Map<BackpackKind, Map<String, float[]>> overrides() {
+        return OVERRIDES;
+    }
+
+    private static Pose itemDefault(BackpackKind kind, ItemDisplayContext context) {
         return switch (kind) {
             case TASMANIAN_TIGER_MK3_GREEN -> itemMk3Green(context);
             case OLIVE_DAYPACK -> itemOliveDaypack(context);
+            case OSPREY_KESTREL, LARGE_MILITARY_DAYPACK -> itemShared(context);
         };
     }
 
@@ -108,10 +149,9 @@ public final class BackpackPlacement {
     private static Pose itemShared(ItemDisplayContext context) {
         return switch (context) {
             case GUI -> Pose.offset(0, INVENTORY_Y_PX, 0);
-            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND ->
-                    Pose.of(0, HAND_Y_PX, 0, HAND_ROT_X, HAND_ROT_Y, HAND_ROT_Z, 1.0F);
+            case FIRST_PERSON_LEFT_HAND, FIRST_PERSON_RIGHT_HAND -> Pose.of(-15, 5, -6, 0, 90, 0, 1.0F);
             case GROUND -> Pose.offset(0, 0, 0);
-            default -> Pose.of(0, HAND_Y_PX, 0, HAND_ROT_X, HAND_ROT_Y, HAND_ROT_Z, 1.0F);
+            default -> Pose.of(0, 19, 0, 90, 0, 0, 1.0F);
         };
     }
 }

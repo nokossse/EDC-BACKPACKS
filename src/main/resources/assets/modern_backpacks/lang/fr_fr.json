@@ -1,9 +1,14 @@
 {
-  "item.modern_backpacks.tasmanian_tiger_mk3_green": "Tasmanian Tiger MK3 (vert)",
+  "item.modern_backpacks.tasmanian_tiger_mk3_green": "Raid Backpack",
+  "tooltip.modern_backpacks.tier": "Tier %s",
   "itemGroup.modern_backpacks": "Modern Backpacks",
-  "container.modern_backpacks.tasmanian_tiger_mk3_green": "Tasmanian Tiger MK3 (vert)",
+  "container.modern_backpacks.tasmanian_tiger_mk3_green": "Raid Backpack",
   "key.modern_backpacks.open": "Ouvrir le sac",
   "key.categories.modern_backpacks": "Modern Backpacks",
-  "item.modern_backpacks.olive_daypack": "Daypack (olive)",
-  "container.modern_backpacks.olive_daypack": "Daypack (olive)"
+  "item.modern_backpacks.olive_daypack": "Medium Military Daypack",
+  "item.modern_backpacks.osprey_kestrel": "Medium Hiking Backpack",
+  "container.modern_backpacks.osprey_kestrel": "Medium Hiking Backpack",
+  "container.modern_backpacks.olive_daypack": "Medium Military Daypack",
+  "item.modern_backpacks.large_military_daypack": "Large Military Daypack",
+  "container.modern_backpacks.large_military_daypack": "Large Military Daypack"
 }

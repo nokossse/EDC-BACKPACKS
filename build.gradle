@@ -73,6 +73,10 @@ dependencies {
 
     // flatDir + fg.deobf: files() collections are not deobfuscated by FG 6.
     implementation fg.deobf('local:simplebedrockmodel:2.5.1-forge-mc1.20.1')
+    // Test-only armor mod (SRG-named jar, so it must go through deobf; run/mods would not remap it). Skipped if absent.
+    if (file('libs/brimm-3.0.1.jar').exists()) {
+        runtimeOnly fg.deobf('local:brimm:3.0.1')
+    }
     // MAE is SBM's jar-in-jar library (no mods.toml); needed on the compile classpath only.
     compileOnly files('libs/mae-1.1.4.jar')
 }

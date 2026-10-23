@@ -132,10 +132,12 @@ def main() -> None:
     data = json.loads(source.read_text(encoding="utf-8"))
 
     for geometry in data["minecraft:geometry"]:
+        geometry["description"]["identifier"] = "geometry." + dest.name.removesuffix(".geo.json")
         geometry["bones"] = strip_reference_bones(geometry["bones"])
         for bone in geometry["bones"]:
             mesh = bone.get("poly_mesh")
             if mesh:
+                bone["pivot"] = [0, 0, 0]
                 flipped = flatten_normals(mesh)
                 closed = collapse_closed_loops(mesh)
                 inset = inset_mesh_uvs(mesh)
