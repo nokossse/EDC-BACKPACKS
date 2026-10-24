@@ -2,6 +2,8 @@ package com.modernbackpacks.client.render;
 
 import com.modernbackpacks.client.model.BackpackModel;
 import com.modernbackpacks.client.model.BackpackModelBakery;
+import com.modernbackpacks.inventory.BackpackInventory;
+import com.modernbackpacks.item.BackpackHelper;
 import com.modernbackpacks.item.BackpackKind;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -16,7 +18,9 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.items.ItemStackHandler;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.client.ICurioRenderer;
 
@@ -73,7 +77,29 @@ public class BackpackCurioRenderer implements ICurioRenderer {
                 stack.hasFoil());
         updateSway(slotContext.entity(), partialTicks);
         this.model.render(poseStack, renderTypeBuffer, vertexConsumer, this.kind.getTexture(), light, OverlayTexture.NO_OVERLAY);
+        renderWeapons(stack, slotContext.entity(), poseStack, renderTypeBuffer, light);
         poseStack.popPose();
+    }
+
+    /** shortcut: the weapon stacks are decoded from NBT every frame, cache them if many backpacks show up in a profile. */
+    private void renderWeapons(ItemStack backpack, LivingEntity wearer, PoseStack poseStack,
+                               MultiBufferSource buffers, int light) {
+        int slots = BackpackHelper.weaponSlots(backpack);
+        if (slots == 0 || !backpack.hasTag() || !backpack.getTag().contains(BackpackInventory.WEAPONS_TAG)) {
+            return;
+        }
+        ItemStackHandler weapons = BackpackInventory.weapons(backpack, slots);
+        for (int slot = 0; slot < Math.min(slots, BackpackPlacement.MAX_WEAPON_SLOTS); slot++) {
+            ItemStack gun = weapons.getStackInSlot(slot);
+            int index = slot;
+            if (!gun.isEmpty()) {
+                this.model.atWeaponSlot(poseStack, slot, () -> {
+                    BackpackPlacement.weapon(this.kind, index).apply(poseStack);
+                    Minecraft.getInstance().getItemRenderer().renderStatic(gun, ItemDisplayContext.FIXED, light,
+                            OverlayTexture.NO_OVERLAY, poseStack, buffers, wearer.level(), wearer.getId());
+                });
+            }
+        }
     }
 
     /**

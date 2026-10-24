@@ -21,6 +21,8 @@ public class ModCreativeTabs {
                         output.accept(ModItems.OLIVE_DAYPACK.get());
                         output.accept(ModItems.OSPREY_KESTREL.get());
                         output.accept(ModItems.LARGE_MILITARY_DAYPACK.get());
+                        output.accept(ModItems.EASTPAK_BACKPACK.get());
+                        output.accept(ModItems.HYDRATION_PACK.get());
                     })
                     .build());
 }

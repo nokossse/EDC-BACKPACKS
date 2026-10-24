@@ -16,9 +16,13 @@ public class ModNetwork {
 
     public static void register() {
         int id = 0;
-        CHANNEL.registerMessage(id, OpenBackpackPacket.class,
+        CHANNEL.registerMessage(id++, OpenBackpackPacket.class,
                 OpenBackpackPacket::encode,
                 OpenBackpackPacket::decode,
                 OpenBackpackPacket::handle);
+        CHANNEL.registerMessage(id++, ToggleAutoHydratePacket.class,
+                ToggleAutoHydratePacket::encode,
+                ToggleAutoHydratePacket::decode,
+                ToggleAutoHydratePacket::handle);
     }
 }

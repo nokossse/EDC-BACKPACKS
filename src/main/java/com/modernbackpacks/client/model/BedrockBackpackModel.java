@@ -12,13 +12,21 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class BedrockBackpackModel implements BackpackModel {
     private static final String REFERENCE_ROOT = "steve";
     /** Bones swung by {@link #setStrapSway}, per model; must be baked as runtime bones (see ClientSetup). */
     public static final Set<String> STRAPS_BONES = Set.of("straps-rot", "rota_staps");
+    /** Empty bones marking where a weapon hangs; slot N uses {@code weaponDummy(N+1)}. */
+    private static final List<String> WEAPON_BONES = List.of("weaponDummy1", "weaponDummy2");
+    /** Every bone read at runtime: the strap swing and the weapon anchors. */
+    public static final Set<String> RUNTIME_BONES = Stream.concat(STRAPS_BONES.stream(), WEAPON_BONES.stream())
+            .collect(Collectors.toUnmodifiableSet());
 
     private final ResourceLocation modelId;
     private BakedBedrockModel baked;
@@ -61,6 +69,24 @@ public final class BedrockBackpackModel implements BackpackModel {
                 RenderType.entityCutoutNoCull(texture),
                 BedrockModelRenderTypes.polyMeshCutout(texture),
                 light, overlay);
+        poseStack.popPose();
+    }
+
+    @Override
+    public void atWeaponSlot(PoseStack poseStack, int slot, Runnable draw) {
+        if (this.instance == null || slot >= WEAPON_BONES.size()) {
+            return;
+        }
+        BoneState dummy = this.instance.getBone(WEAPON_BONES.get(slot));
+        if (dummy == null) {
+            return;
+        }
+        poseStack.pushPose();
+        // Same Bedrock -> Java flip as render(); it leaves a world-aligned, Y-up frame.
+        poseStack.translate(0.0F, 1.5F, 0.0F);
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+        dummy.translateAndRotateAndScale(poseStack);
+        draw.run();
         poseStack.popPose();
     }
 

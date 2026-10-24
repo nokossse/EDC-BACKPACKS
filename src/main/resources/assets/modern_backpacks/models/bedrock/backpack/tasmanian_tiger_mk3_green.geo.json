@@ -6922,6 +6922,24 @@
               }
             }
           ]
+        },
+        {
+          "name": "weaponDummy2",
+          "parent": "backpack",
+          "pivot": [
+            -6.34282,
+            20.8919,
+            4.82559
+          ]
+        },
+        {
+          "name": "weaponDummy1",
+          "parent": "backpack",
+          "pivot": [
+            6.34282,
+            20.8919,
+            4.82559
+          ]
         }
       ]
     }

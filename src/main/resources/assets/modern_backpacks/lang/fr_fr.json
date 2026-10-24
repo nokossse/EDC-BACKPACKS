@@ -10,5 +10,15 @@
   "container.modern_backpacks.osprey_kestrel": "Medium Hiking Backpack",
   "container.modern_backpacks.olive_daypack": "Medium Military Daypack",
   "item.modern_backpacks.large_military_daypack": "Large Military Daypack",
-  "container.modern_backpacks.large_military_daypack": "Large Military Daypack"
+  "container.modern_backpacks.large_military_daypack": "Large Military Daypack",
+  "item.modern_backpacks.eastpak_backpack": "Small Daypack",
+  "container.modern_backpacks.eastpak_backpack": "Small Daypack",
+  "item.modern_backpacks.hydration_pack": "Sac d'hydratation",
+  "tooltip.modern_backpacks.hydration_pack.content": "Eau : %s / %s mB",
+  "gui.modern_backpacks.auto_hydrate": "Hydratation auto : %s",
+  "gui.modern_backpacks.on": "ON",
+  "gui.modern_backpacks.off": "OFF",
+  "tooltip.modern_backpacks.hydration_pack.empty": "Vide",
+  "tooltip.modern_backpacks.hydration_pack.servings": "Contient %1$s/%2$s gorgées",
+  "gui.modern_backpacks.auto_hydrate.worn_only": "L'hydratation auto ne marche que si le sac est porté"
 }

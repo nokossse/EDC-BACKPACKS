@@ -44,7 +44,12 @@ Bones named in `BedrockBackpackModel.STRAPS_BONES` (`straps-rot`, `rota_staps`) 
 For a new strap bone, add its exact name (as spelled in the geo) to that set. It is baked as an animated bone
 via `ClientSetup`, so the name must match the geo. Other bones stay static.
 
-## 7. Check
+## 7. Optional: TACZ weapon slots
+Add empty bones `weaponDummy1` / `weaponDummy2` (pivot = where the gun hangs) in Blockbench, then pass the count as the
+third argument of the `BackpackKind` entry (e.g. `("<id>", 5, 2)`). Slots show in a left GUI panel under the hydration one
+and only exist when TACZ is installed. Tune the gun pose live with `/mbplace weapon 1|2 x|y|z|rx|ry|rz|s <value>` (per bag and per slot; paste `/mbplace print` into `weaponDefault`).
+
+## 8. Check
 - `./gradlew compileJava`, then `./gradlew runClient`.
 - Tune the hand/inventory pose live, no rebuild: hold the bag and use `/mbplace first|third|gui|ground x|y|z|rx|ry|rz|s <value>`,
   then `/mbplace print` and paste the `Pose.of(...)` values into `BackpackPlacement`. Resource changes (geo, texture, lang) reload with F3+T; Java changes need a restart.

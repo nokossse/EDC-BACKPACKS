@@ -54,7 +54,10 @@ public class BackpackItem extends Item implements ICurioItem {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            BackpackHelper.openBackpack(serverPlayer, stack, hand);
+            // Shift + right click wears it (swapping with the current one); right click, or no free back slot, opens it.
+            if (!player.isShiftKeyDown() || !BackpackHelper.equipFromHand(player, hand)) {
+                BackpackHelper.openBackpack(serverPlayer, stack, hand);
+            }
         }
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }

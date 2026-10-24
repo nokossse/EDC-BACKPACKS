@@ -62,6 +62,11 @@ repositories {
         name = 'Curios'
         url = 'https://maven.theillusivec4.top/'
     }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content { includeGroup 'maven.modrinth' }
+    }
     flatDir {
         dirs 'libs'
     }
@@ -76,6 +81,10 @@ dependencies {
     // Test-only armor mod (SRG-named jar, so it must go through deobf; run/mods would not remap it). Skipped if absent.
     if (file('libs/brimm-3.0.1.jar').exists()) {
         runtimeOnly fg.deobf('local:brimm:3.0.1')
+    }
+    // Test-only: TACZ guns for the backpack weapon slots (soft dependency in the mod itself). Skipped if absent.
+    if (file('libs/tacz-1.1.8-hotfix.jar').exists()) {
+        runtimeOnly fg.deobf('local:tacz:1.1.8-hotfix')
     }
     // MAE is SBM's jar-in-jar library (no mods.toml); needed on the compile classpath only.
     compileOnly files('libs/mae-1.1.4.jar')

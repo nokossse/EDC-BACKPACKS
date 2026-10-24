@@ -32,6 +32,8 @@ public class ClientSetup {
                     () -> new BackpackCurioRenderer(BackpackKind.OSPREY_KESTREL));
             CuriosRendererRegistry.register(ModItems.LARGE_MILITARY_DAYPACK.get(),
                     () -> new BackpackCurioRenderer(BackpackKind.LARGE_MILITARY_DAYPACK));
+            CuriosRendererRegistry.register(ModItems.EASTPAK_BACKPACK.get(),
+                    () -> new BackpackCurioRenderer(BackpackKind.EASTPAK_BACKPACK));
         });
     }
 
@@ -39,7 +41,7 @@ public class ClientSetup {
     public static void registerBedrockModels(RegisterV2BedrockResourcesEvent event) {
         for (BackpackKind kind : BackpackKind.values()) {
             event.bakedModel(kind.getBedrockModel())
-                    .options(BakerOptions.ofAnimatedBones(BedrockBackpackModel.STRAPS_BONES))
+                    .options(BakerOptions.ofAnimatedBones(BedrockBackpackModel.RUNTIME_BONES))
                     .register();
         }
     }

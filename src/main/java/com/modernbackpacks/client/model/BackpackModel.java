@@ -13,6 +13,13 @@ public interface BackpackModel {
     void render(PoseStack poseStack, MultiBufferSource buffers, VertexConsumer cubeBuffer,
                 ResourceLocation texture, int light, int overlay);
 
+    /**
+     * Runs {@code draw} with the pose stack at the {@code weaponDummy<slot+1>} bone, in a world-aligned frame
+     * (Y up). Does nothing for a model without that bone, or before its first render.
+     */
+    default void atWeaponSlot(PoseStack poseStack, int slot, Runnable draw) {
+    }
+
     /** Hanging straps swing, in degrees: pitch = back/forward, roll = sideways. No-op when the model has none. */
     default void setStrapSway(float pitchDeg, float rollDeg) {
     }

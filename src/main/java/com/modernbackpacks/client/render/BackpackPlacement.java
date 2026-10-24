@@ -38,6 +38,42 @@ public final class BackpackPlacement {
     /** Recul du sac (px, vers l'arrière) quand le joueur porte un plastron, quel qu'il soit. Réglé via /mbplace armor. */
     public static float armorOffsetPx = 1.2F;
 
+    public static final int MAX_WEAPON_SLOTS = 2;
+
+    // --- Arme TACZ accrochée à un weaponDummy, par sac et par slot : [x, y, z (px), rotX, rotY, rotZ, scale]. ---
+    private static final Map<BackpackKind, float[][]> WEAPONS = new EnumMap<>(BackpackKind.class);
+
+    /** Valeurs de départ ; colle ici le résultat de /mbplace print pour les rendre permanentes. */
+    private static float[] weaponDefault(BackpackKind kind, int slot) {
+        return switch (kind) {
+            case TASMANIAN_TIGER_MK3_GREEN -> slot == 0
+                    ? new float[]{-6.2F, 22.0F, 5.0F, -90.0F, 90.0F, 0.0F, 0.5F}
+                    : new float[]{7.0F, 22.0F, 5.0F, -90.0F, 90.0F, 0.0F, 0.5F};
+            case LARGE_MILITARY_DAYPACK -> slot == 0
+                    ? new float[]{-4.3F, 20.0F, 4.0F, -90.0F, 90.0F, 0.0F, 0.5F}
+                    : new float[]{5.5F, 20.0F, 4.0F, -90.0F, 90.0F, 0.0F, 0.5F};
+            default -> new float[]{0, 0, 0, 0, 0, 0, 1.0F};
+        };
+    }
+
+    /** Valeurs modifiables (/mbplace weapon) pour ce sac et ce slot (0 = weaponDummy1). */
+    public static float[] weaponTunable(BackpackKind kind, int slot) {
+        float[][] perSlot = WEAPONS.computeIfAbsent(kind, k -> new float[MAX_WEAPON_SLOTS][]);
+        if (perSlot[slot] == null) {
+            perSlot[slot] = weaponDefault(kind, slot);
+        }
+        return perSlot[slot];
+    }
+
+    public static Map<BackpackKind, float[][]> weapons() {
+        return WEAPONS;
+    }
+
+    public static Pose weapon(BackpackKind kind, int slot) {
+        float[] v = weaponTunable(kind, slot);
+        return Pose.of(v[0], v[1], v[2], v[3], v[4], v[5], v[6]);
+    }
+
     /** Convertit des pixels Minecraft en blocs (1 bloc = 16 px). */
     public static float px(float pixels) {
         return pixels / 16.0F;
@@ -81,7 +117,7 @@ public final class BackpackPlacement {
             // Modélisé directement sur le Steve de Blockbench : 0 = position exacte de Blockbench.
             case TASMANIAN_TIGER_MK3_GREEN -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
             // Modélisé directement sur le Steve de Blockbench : 0 = position exacte de Blockbench.
-            case OLIVE_DAYPACK, OSPREY_KESTREL, LARGE_MILITARY_DAYPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
+            case OLIVE_DAYPACK, OSPREY_KESTREL, LARGE_MILITARY_DAYPACK, EASTPAK_BACKPACK -> Pose.of(0, 0F, 0F, 0, 0, 0, 1.0F);
         };
     }
 
@@ -134,7 +170,7 @@ public final class BackpackPlacement {
         return switch (kind) {
             case TASMANIAN_TIGER_MK3_GREEN -> itemMk3Green(context);
             case OLIVE_DAYPACK -> itemOliveDaypack(context);
-            case OSPREY_KESTREL, LARGE_MILITARY_DAYPACK -> itemShared(context);
+            case OSPREY_KESTREL, LARGE_MILITARY_DAYPACK, EASTPAK_BACKPACK -> itemShared(context);
         };
     }
 

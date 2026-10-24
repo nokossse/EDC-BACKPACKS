@@ -7,10 +7,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
 public enum BackpackKind {
-    TASMANIAN_TIGER_MK3_GREEN("tasmanian_tiger_mk3_green", 7),
+    TASMANIAN_TIGER_MK3_GREEN("tasmanian_tiger_mk3_green", 7, 2),
     OLIVE_DAYPACK("olive_daypack", 4),
     OSPREY_KESTREL("osprey_kestrel", 6),
-    LARGE_MILITARY_DAYPACK("large_military_daypack", 5);
+    LARGE_MILITARY_DAYPACK("large_military_daypack", 5, 2),
+    EASTPAK_BACKPACK("eastpak_backpack", 2);
 
     private static final String[] ROMAN = {"I", "II", "III", "IV", "V", "VI", "VII"};
     // Tier I..VII
@@ -21,9 +22,16 @@ public enum BackpackKind {
     private final String id;
     private final int slots;
     private final int tier;
+    private final int weaponSlots;
 
     BackpackKind(String id, int tier) {
+        this(id, tier, 0);
+    }
+
+    /** {@code weaponSlots} = number of {@code weaponDummyN} bones in the geo. */
+    BackpackKind(String id, int tier, int weaponSlots) {
         this.id = id;
+        this.weaponSlots = weaponSlots;
         this.slots = tier * 9;
         this.tier = tier;
     }
@@ -44,6 +52,10 @@ public enum BackpackKind {
 
     public int getSlots() {
         return this.slots;
+    }
+
+    public int getWeaponSlots() {
+        return this.weaponSlots;
     }
 
     public int getRows() {
